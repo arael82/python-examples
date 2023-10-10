@@ -1,0 +1,27 @@
+import holidays
+from datetime import date, timedelta
+
+# Create a dictionary of Argentine holidays for a specific year (including the next year)
+argentina_holidays = holidays.CountryHoliday('AR', observed=True, years=[date.today().year, date.today().year + 1])
+
+# Get today's date
+today = date.today()
+
+# Calculate the start and end dates of this week
+start_of_this_week = today - timedelta(days=today.weekday())
+end_of_this_week = start_of_this_week + timedelta(days=6)
+
+# Calculate the start and end dates of the next week
+start_of_next_week = end_of_this_week + timedelta(days=1)
+end_of_next_week = start_of_next_week + timedelta(days=6)
+
+# Create a list of upcoming holidays for this and the next week
+upcoming_holidays = [
+    (date, name) for date, name in argentina_holidays.items()
+    if start_of_this_week <= date <= end_of_next_week
+]
+
+# Print the list of upcoming holidays for this and the next week
+print("Upcoming Argentine Holidays for this and the next Week:")
+for date, name in upcoming_holidays:
+    print(f"{date}: {name}")
